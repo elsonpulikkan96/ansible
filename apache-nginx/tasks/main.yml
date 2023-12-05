@@ -1,0 +1,33 @@
+# tasks file for apache-nginx
+---
+- name: Install Apache and Nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install Apache
+      package:
+        name: apache2
+        state: present
+
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Enable Apache2 modules
+      apache2_module:
+        state: present
+        name: "{{ item }}"
+      with_items:
+        - proxy
+        - proxy_http
+        - proxy_balancer
+        - lbmethod_byrequests
+
+    - name: Copy Nginx reverse proxy configuration
+      template:
+        src: nginx_reverse_proxy.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify:
+        - Reload Nginx
