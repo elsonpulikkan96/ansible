@@ -69,4 +69,4 @@ templates: Contains template files, which can be used with the template Ansible 
 
 vars: Contains variable files.
 
-
+ref: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04
